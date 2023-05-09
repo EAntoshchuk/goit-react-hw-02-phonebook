@@ -1,7 +1,16 @@
-const { Component } = require('react');
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import css from './Phonebook.module.css';
 
 class PhoneBook extends Component {
   state = {
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
     name: '',
     number: '',
   };
@@ -28,6 +37,7 @@ class PhoneBook extends Component {
         <label>
           Name
           <input
+            className={css.input}
             type="text"
             name="name"
             value={this.state.name}
@@ -49,7 +59,7 @@ class PhoneBook extends Component {
             required
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit">Add contact</button>
       </form>
     );
   }
