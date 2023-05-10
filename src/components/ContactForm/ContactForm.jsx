@@ -64,3 +64,7 @@ class PhoneBook extends Component {
 }
 
 export default PhoneBook;
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
