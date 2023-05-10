@@ -1,16 +1,9 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from './Phonebook.module.css';
+import css from './ContactForm.module.css';
 
 class PhoneBook extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
     name: '',
     number: '',
   };
@@ -18,7 +11,7 @@ class PhoneBook extends Component {
   handleChange = event => {
     const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
-    console.log(event.currentTarget.value);
+    // console.log(event.currentTarget.value);
   };
 
   handleSubmit = e => {
@@ -33,11 +26,12 @@ class PhoneBook extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={{ width: '200px' }}>
-        <label>
-          Name
+      <form onSubmit={this.handleSubmit} className={css.form}>
+        <label className={css.form_label}>
+          <div className={css.form_title}>Name</div>
+
           <input
-            className={css.input}
+            className={css.form_input}
             type="text"
             name="name"
             value={this.state.name}
@@ -47,9 +41,11 @@ class PhoneBook extends Component {
             required
           />
         </label>
-        <label>
-          Number
+        <label className={css.form_label}>
+          <div className={css.form_title}>Number</div>
+
           <input
+            className={css.form_input}
             type="tel"
             name="number"
             value={this.state.number}
@@ -59,7 +55,9 @@ class PhoneBook extends Component {
             required
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button type="submit" className={css.btn}>
+          Add contact
+        </button>
       </form>
     );
   }

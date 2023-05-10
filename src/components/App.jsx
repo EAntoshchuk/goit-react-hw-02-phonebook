@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import PhoneBook from './Phonebook/Phonebook';
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 
 class App extends Component {
@@ -18,17 +19,36 @@ class App extends Component {
     console.log(data);
   };
 
-  addContact = name => {
+  addContact = ({ name, number }) => {
     const newContact = {
       id: nanoid(),
       name,
+      number,
     };
+
+    const checkedContact = (name, number) => {
+      return this.state.contacts.find(
+        contact =>
+          contact.name.toLowerCase() === name.toLowerCase() &&
+          contact.number === number
+      );
+    };
+
+    if (checkedContact(name, number)) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+
     this.setState(({ contacts }) => ({
       contacts: [newContact, ...contacts],
     }));
   };
 
-  deleteContact = e => {};
+  deleteContact = id => {
+    this.setState(({ contacts }) => {
+      return { contacts: contacts.filter(contact => contact.id !== id) };
+    });
+  };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -38,7 +58,7 @@ class App extends Component {
     const { filter, contacts } = this.state;
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.text.toLowerCase().includes(normalizedFilter)
+      contact.name.toLowerCase().trim().includes(normalizedFilter)
     );
   };
 
@@ -49,22 +69,38 @@ class App extends Component {
       <div>
         <div
           style={{
-            height: '100px',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-around',
             alignItems: 'center',
-            fontSize: 40,
-            color: '#010101',
+            height: '100px',
+            marginBottom: '20px',
+            backgroundColor: '#acacc8',
+            color: '#017fb8',
+            fontSize: '35px',
           }}
         >
-          React-hw-02-phonebook
+          React-hw-02-Phonebook
         </div>
-        <div>
-          <PhoneBook onSubmit={this.formSubmitHandler} />
+        <div
+          style={{
+            marginBottom: '20px',
+            padding: '20px',
+          }}
+        >
+          <h1 style={{ marginBottom: '20px' }}>Phonebook</h1>
+          <ContactForm onSubmit={this.addContact} />
         </div>
-        <div>
+        <div
+          style={{
+            padding: '20px',
+          }}
+        >
+          <h2 style={{ marginBottom: '20px' }}>Contacts</h2>
           <Filter value={filter} onChange={this.changeFilter} />
-          {/* <ContactList contacts={filteredContacts} /> */}
+          <ContactList
+            contacts={filteredContacts}
+            onClick={this.deleteContact}
+          />
         </div>
       </div>
     );
