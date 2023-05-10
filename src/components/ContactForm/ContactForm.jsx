@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
-class PhoneBook extends Component {
+class ContactForm extends Component {
   state = {
     name: '',
     number: '',
@@ -63,7 +63,7 @@ class PhoneBook extends Component {
   }
 }
 
-export default PhoneBook;
+export default ContactForm;
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
